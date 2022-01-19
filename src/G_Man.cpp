@@ -17,5 +17,12 @@
 // ---------------------------------------------------------------------
 // [CFXS] //
 #include <CFXS/CNC/G_Man.hpp>
+#include <CFXS/Base/Debug.hpp>
 
-namespace CFXS::CNC {}
+namespace CFXS::CNC {
+
+    G_Man::G_Man() {
+        CFXS_printf("G_Man[0x%p] Initialize\n", this);
+    }
+
+} // namespace CFXS::CNC
