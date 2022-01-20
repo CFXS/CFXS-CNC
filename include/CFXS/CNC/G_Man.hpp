@@ -15,6 +15,7 @@ namespace CFXS::CNC {
 
     public:
         G_Man();
+        ~G_Man();
 
         /// Process terminated or non-terminated block off G-Code data.
         /// Push fully decoded commands to execution queue.
@@ -25,9 +26,6 @@ namespace CFXS::CNC {
 
         /// Get line number of the current data stream
         int GetCurrentLineNumber() const;
-
-    private:
-        ~G_Man() = delete; // Do not allow stack allocation
 
     private:
         ParserState m_ParserState;    // Parser StateMachine main state

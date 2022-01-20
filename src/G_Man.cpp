@@ -25,7 +25,11 @@ namespace CFXS::CNC {
     ///////////////////////////////////////////////////////////////////////
 
     G_Man::G_Man() {
-        CFXS_printf("Initialize G-Code processor [0x%p]\n", this);
+        CFXS_printf("Initialize G-Code Processor [0x%p]\n", this);
+    }
+
+    G_Man::~G_Man() {
+        CFXS_printf("Delete G-Code Processor [0x%p]\n", this);
     }
 
     /// Get line number of the current data stream
@@ -47,7 +51,7 @@ namespace CFXS::CNC {
             auto c = charBlock[readPos];
 
             switch (m_ParserState) {
-                case ParserState::
+                //case ParserState::
             }
         }
 
