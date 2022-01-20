@@ -18,6 +18,7 @@
 // [CFXS] //
 #include <CFXS/CNC/G_Man.hpp>
 #include <CFXS/Base/Debug.hpp>
+#include <ctype.h>
 
 namespace CFXS::CNC {
 
@@ -40,22 +41,34 @@ namespace CFXS::CNC {
     ///////////////////////////////////////////////////////////////////////
     // Parser
 
-    /// Process terminated or non-terminated block off G-Code data.
-    /// Push fully decoded commands to execution queue.
-    /// \param charBlock block of chars to parse.
-    /// \param len length of charBlock.
+    /// Process null terminated G-Code command.
+    /// Push fully decoded command to execution queue.
+    /// \param cmd Single G-Code command (multiple commans on a single line will cause a parsing error)
+    /// \param len(optional) Length of cmd if known (strlen is used if len == -1)
     /// \returns Status of parser after taking this data block
-    G_Man::ParseStatus G_Man::ProcessCommandDataBlock(const char* charBlock, size_t len) {
-        size_t readPos = len;
+    G_Man::ParseStatus G_Man::ProcessCommand(const char* cmd, int len) {
+        if (len == -1)
+            len = strlen(cmd);
+
+        auto readPos  = 0;                               // Index of currently processed char
+        m_ParserState = ParserState::READ_COMMAND_CLASS; // First step is to find what kind of command this is (G/M/F/...)
+
+        CFXS_printf("[G_Man] Process line: \"%s\"\n", cmd);
+
         while (readPos < len) {
-            auto c = charBlock[readPos];
+            char c = cmd[readPos];
+
+            if (isspace(c)) {
+                readPos++;
+                continue;
+            }
 
             switch (m_ParserState) {
-                //case ParserState::
+                default: readPos++;
             }
         }
 
-        return ParseStatus::OK;
+        return ParseStatus::EMPTY_COMMAND;
     }
 
 } // namespace CFXS::CNC

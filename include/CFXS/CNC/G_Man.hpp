@@ -5,8 +5,6 @@
 
 namespace CFXS::CNC {
 
-    // TODO(CFXS-CNC): ProcessCommandDataBlock -> ProcessCommandDataLine (easier parsing, no need for block processing)
-    // TODO(CFXS-CNC): Get last parse error enum/string
     class G_Man {
         using ParserState = internal::G_Man::ParserState;
 
@@ -17,12 +15,12 @@ namespace CFXS::CNC {
         G_Man();
         ~G_Man();
 
-        /// Process terminated or non-terminated block off G-Code data.
-        /// Push fully decoded commands to execution queue.
-        /// \param charBlock block of chars to parse.
-        /// \param len length of charBlock.
+        /// Process null terminated G-Code command.
+        /// Push fully decoded command to execution queue.
+        /// \param cmd Single G-Code command (multiple commans on a single line will cause a parsing error)
+        /// \param len(optional) Length of cmd if known (strlen is used if len == -1)
         /// \returns Status of parser after taking this data block
-        ParseStatus ProcessCommandDataBlock(const char* charBlock, size_t len);
+        ParseStatus ProcessCommand(const char* cmd, int len = -1);
 
         /// Get line number of the current data stream
         int GetCurrentLineNumber() const;
