@@ -21,8 +21,37 @@
 
 namespace CFXS::CNC {
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+
     G_Man::G_Man() {
-        CFXS_printf("G_Man[0x%p] Initialize\n", this);
+        CFXS_printf("Initialize G-Code processor [0x%p]\n", this);
+    }
+
+    /// Get line number of the current data stream
+    __always_inline int G_Man::GetCurrentLineNumber() const {
+        return m_CurrentLineNumber;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Parser
+
+    /// Process terminated or non-terminated block off G-Code data.
+    /// Push fully decoded commands to execution queue.
+    /// \param charBlock block of chars to parse.
+    /// \param len length of charBlock.
+    /// \returns Status of parser after taking this data block
+    G_Man::ParseStatus G_Man::ProcessCommandDataBlock(const char* charBlock, size_t len) {
+        size_t readPos = len;
+        while (readPos < len) {
+            auto c = charBlock[readPos];
+
+            switch (m_ParserState) {
+                case ParserState::
+            }
+        }
+
+        return ParseStatus::OK;
     }
 
 } // namespace CFXS::CNC
